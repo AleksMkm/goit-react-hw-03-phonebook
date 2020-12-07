@@ -6,18 +6,29 @@ import ContactForm from './Components/ContactForm';
 import Section from './Components/Section';
 import Filter from './Components/Filter';
 
-const initialState = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
+// const initialState = [
+//   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+//   { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+//   { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+//   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+// ];
 
 class App extends Component {
   state = {
-    contacts: initialState,
+    contacts: [],
     filter: '',
   };
+
+  componentDidMount() {
+    const storageContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (storageContacts) {
+      this.setState({ contacts: storageContacts });
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+  }
 
   addContact = (name, number) => {
     const { contacts } = this.state;
@@ -74,17 +85,23 @@ class App extends Component {
           <ContactForm onSubmit={this.addContact} />
         </Section>
         <Section title="Contacts">
-          <Filter value={filter} onChange={this.handleFilter} />
-          {filter.trim() ? (
-            <ContactList
-              contacts={filteredContacts}
-              deleteHandler={this.deleteContact}
-            />
+          {contacts.length ? (
+            <>
+              <Filter value={filter} onChange={this.handleFilter} />
+              {filter.trim() ? (
+                <ContactList
+                  contacts={filteredContacts}
+                  deleteHandler={this.deleteContact}
+                />
+              ) : (
+                <ContactList
+                  contacts={contacts}
+                  deleteHandler={this.deleteContact}
+                />
+              )}
+            </>
           ) : (
-            <ContactList
-              contacts={contacts}
-              deleteHandler={this.deleteContact}
-            />
+            <div>Oops. no contacts here! Let's add some data!</div>
           )}
         </Section>
       </Container>

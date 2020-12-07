@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
+import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './Contact.module.css';
+import IconButton from '../IconButton/';
 
 function Contact({ id, name, phone, deleteHandler }) {
   return (
@@ -17,9 +19,13 @@ function Contact({ id, name, phone, deleteHandler }) {
         {phone}
       </span>
 
-      <button className={styles.btn} onClick={deleteHandler} data-id={id}>
-        Delete
-      </button>
+      <IconButton
+        onClick={deleteHandler}
+        data-id={id}
+        aria-label="delete contact"
+      >
+        <DeleteIcon />
+      </IconButton>
     </li>
   );
 }

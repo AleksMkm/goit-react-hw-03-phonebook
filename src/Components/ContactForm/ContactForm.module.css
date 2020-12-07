@@ -1,5 +1,7 @@
 .form {
-  margin-bottom: 15px;
+  position: relative;
+
+  margin-bottom: 30px;
 }
 
 .addField {
@@ -26,4 +28,29 @@
 .btn:hover,
 .btn:focus {
   background-color: orange;
+}
+
+.btn:disabled:hover,
+.btn:disabled:focus {
+  background-color: gray;
+}
+
+.nameError {
+  position: absolute;
+  top: 40px;
+  left: 10px;
+
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  color: red;
+}
+
+.numberError {
+  position: absolute;
+  top: 40px;
+  left: 230px;
+
+  font-family: Roboto, sans-serif;
+  font-size: 14px;
+  color: red;
 }
